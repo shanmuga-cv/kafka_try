@@ -2,7 +2,7 @@ kafka_home := /opt/app-root/src/kafka_2.11-1.1.0
 
 # Java producer
 run_producer: complie_producer
-	java -cp "bin:$(kafka_home)/libs/*" producer.SimpleProducer
+	java -cp "bin:$(kafka_home)/libs/*" producer.IterateProducer 500 5 test_message
 
 complie_producer: clean_producer
 	javac producer/*java -cp "$(kafka_home)/libs/*" -d bin
