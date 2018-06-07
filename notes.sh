@@ -1,3 +1,6 @@
+# TODO understand transactiones
+# TODO try out consumer gruops
+
 # docker start existing continaer
 docker container start -i -a 8f24a64b4dfe
 

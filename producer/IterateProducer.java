@@ -12,10 +12,10 @@ public class IterateProducer {
         int sleep_time = Integer.parseInt(args[0]);
         int no_messages = Integer.parseInt(args[1]);
         String message_prefix = args[2];
-        String topic = "my_topic";
+        String topic = "spark_kafka_events";
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "kafka_server_1:9092");
+        props.put("bootstrap.servers", "localhost:9092");
         props.put("acks", "all");
         props.put("linger.ms", 1);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -23,9 +23,10 @@ public class IterateProducer {
 
         Producer<String, String> producer = new KafkaProducer<>(props);
         int no_partitions = producer.partitionsFor(topic).size();
+        System.out.println("for topic " + topic + " got partitions " + no_partitions);
         for(int i = 0; i < no_messages; i++) {
             Thread.sleep(sleep_time);
-            ProducerRecord<String, String> record = makeRecord("my_topic", i, message_prefix, no_partitions);
+            ProducerRecord<String, String> record = makeRecord(topic, i, message_prefix, no_partitions);
             System.out.println("sending msg " + record);
             producer.send(record);
         }

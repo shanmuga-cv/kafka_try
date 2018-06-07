@@ -1,0 +1,46 @@
+Check how to store kafka offset from spark to ensure only once processing
+
+# confirm kafka stores offset for each pattition-consumer_group
+	./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group first_group
+	./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group first_group --reset-offsets --to-earliest --topic spark_kafka_events
+	./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic spark_kafka_events --from-beginning
+
+what is spark checkpointing
+run spark streaming to read from infitine producer.
+check how does this handle failure. only once processing.
+
+kafka stores offset in topic __consumer_offsets (compacted)
+spark stores offset in checkpoint?
+
+./kafka-topics.sh --zookeeper localhost:2181 --describe --topic my_topic
+./kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic __consumer_offsets
+
+
+./kafka-topics.sh --create --topic spark_kafka_events --partitions 3 --replication-factor 1 --zookeeper localhost:2181
+
+
+
+
+
+checkpointing options (Both require idempotent opertaions, kudu primary key)
+spark checkpoints.
+just by enbaling with HDFS dir. It should work.
+Cannot handle code changes. 
+For (code) upgrades run new version along with old and after they have caught up (duplicate processing) stop old.
+Burrow cannot monitor lag
+
+
+store in kafka itself
+No auto commit, as there is a lag between read time and processing.
+Should be manually commited after batch is processed.
+Failures might trigger duplicate processing. (idempotency)
+
+Only once processing is only possible with clients with good transaction. (DB)
+http://shzhangji.com/blog/2017/07/31/how-to-achieve-exactly-once-semantics-in-spark-streaming/
+
+
+gracefully stop spark streaming
+https://stackoverflow.com/questions/39990681/how-to-stop-running-spark-streaming-application-gracefully
+http://why-not-learn-something.blogspot.dk/2016/05/apache-spark-streaming-how-to-do.html
+https://github.com/apache/spark/blob/992447fb30ee9ebb3cf794f2d06f4d63a2d792db/streaming/src/main/scala/org/apache/spark/streaming/StreamingContext.scala#L710
+https://github.com/apache/spark/blob/8ac71d62d976bbfd0159cac6816dd8fa580ae1cb/streaming/src/main/scala/org/apache/spark/streaming/scheduler/JobScheduler.scala
