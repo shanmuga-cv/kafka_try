@@ -1,4 +1,4 @@
-kafka_home := /opt/app-root/src/kafka_2.11-1.1.0
+kafka_home := /opt/kafka_2.11-1.1.0
 
 # Java consumer
 run_consumer: compile_consumer
