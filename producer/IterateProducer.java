@@ -15,7 +15,7 @@ public class IterateProducer {
         String topic = "spark_kafka_events";
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "localhost:9092");
+        props.put("bootstrap.servers", "dev_kafka_server_1:9092");
         props.put("acks", "all");
         props.put("linger.ms", 1);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
