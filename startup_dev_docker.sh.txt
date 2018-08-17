@@ -1,4 +1,4 @@
-# steps to start from dev_docker image
+# steps to start from dev_docker image (depends on https://github.com/shanmuga-cv/dev_docker)
 
 cd ~git_repo/dev_docker/
 # make build
