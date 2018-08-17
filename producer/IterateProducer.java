@@ -25,7 +25,7 @@ public class IterateProducer {
         int no_partitions = producer.partitionsFor(topic).size();
         for(int i = 0; i < no_messages; i++) {
             Thread.sleep(sleep_time);
-            ProducerRecord<String, String> record = makeRecord("my_topic", i, message_prefix, no_partitions);
+            ProducerRecord<String, String> record = makeRecord(topic, i, message_prefix, no_partitions);
             System.out.println("sending msg " + record);
             producer.send(record);
         }

@@ -20,7 +20,7 @@ public class SimpleConsumer {
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("auto.offset.reset", "earliest");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
-        List<String> topics = Arrays.asList("spark_kafka_events");
+        List<String> topics = Arrays.asList("my_topic");
         consumer.subscribe(topics);
 
          while(true) {

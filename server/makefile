@@ -1,4 +1,5 @@
-kafka_home := ~/kafka_2.11-1.1.0
+kafka_home := /opt/kafka_2.11-1.1.0
+kafka_topic := my_topic
 
 start_server: start_zookeeper start_kafka
 	echo started
@@ -24,12 +25,12 @@ start_kafka:
 
 create_topic:
 	cd $(kafka_home) && \
-	bin/kafka-topics.sh --create --zookeeper kafka_server_1:2181 --replication-factor 1 --partitions 1 --topic my_topic
+	bin/kafka-topics.sh --create --zookeeper dev_kafka_server_1:2181 --replication-factor 1 --partitions 1 --topic ${kafka_topic}
 
 list_topic:
 	cd $(kafka_home) && \
-	bin/kafka-topics.sh --zookeeper kafka_server_1:2181 --list
+	bin/kafka-topics.sh --zookeeper dev_kafka_server_1:2181 --list
 
 describe_topic:
 	cd $(kafka_home) && \
-	bin/kafka-topics.sh --zookeeper kafka_server_1:2181 --describe --topic my_topic
+	bin/kafka-topics.sh --zookeeper dev_kafka_server_1:2181 --describe --topic ${kafka_topic}
