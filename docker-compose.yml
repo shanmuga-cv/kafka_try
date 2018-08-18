@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  server:
+    image: kafka_try_img
+    stdin_open: true
+    tty: true
+    volumes: 
+      - ./:/opt/git_repo/kafka_try
+    # command: ["make", "-f", "/opt/git_repo/kafka_try/server/makefile", "start_server", "&&", "bash"]
+    command: ["bash", "-c", "make -f /opt/git_repo/kafka_try/server/makefile start_server && exec bash"]
+  
+  producer:
+    image: kafka_try_img
+    stdin_open: true
+    tty: true
+    volumes: 
+      - ./:/opt/git_repo/kafka_try
+
+  consumer:
+    image: kafka_try_img
+    stdin_open: true
+    tty: true
+    volumes: 
+      - ./:/opt/git_repo/kafka_try
