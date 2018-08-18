@@ -12,7 +12,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 public class SimpleConsumer {
     public static void main(String []args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "dev_kafka_server_1:9092");
+        props.put("bootstrap.servers", "kafka_try_server_1:9092");
         props.put("group.id", "first_group");
         props.put("client.id", "consumer_1");
         props.put("enable.auto.commit", "false");

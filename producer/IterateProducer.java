@@ -15,7 +15,7 @@ public class IterateProducer {
         String topic = "my_topic";
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "dev_kafka_server_1:9092");
+        props.put("bootstrap.servers", "kafka_try_server_1:9092");
         props.put("acks", "all");
         props.put("linger.ms", 1);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
