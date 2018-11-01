@@ -33,3 +33,7 @@ docker run -t -i --name kafka_broker_1 --network kafka_try_network kafka_try
 docker run -t -i -v /Users/shanmuga.chidambaravel/git_repo/kafka_try:/opt/kafka_try --name kafka_producer_1 --network kafka_try_network kafka_try
 docker run -t -i -v /Users/shanmuga.chidambaravel/git_repo/kafka_try:/opt/kafka_try --name kafka_consumer_1 --network kafka_try_network kafka_try
 docker run -i -t -v /Users/shanmuga.chidambaravel/git_repo/kafka_try:/opt/kafka_try --name kafka_server_1  --network kafka_try_network kafka_try
+
+./kafka-topics.sh --list --zookeeper localhost:2181
+./kafka-topics.sh --describe --zookeeper localhost:2181 --topic errors_complaint_created_bridged,errors_compensation_created_bridged
+./kafka-run-class.sh kafka.tools.GetOffsetShell  --broker-list localhost:9092,localhost:9092 --topic  errors_complaint_created_bridged
