@@ -37,3 +37,5 @@ docker run -i -t -v /Users/shanmuga.chidambaravel/git_repo/kafka_try:/opt/kafka_
 ./kafka-topics.sh --list --zookeeper localhost:2181
 ./kafka-topics.sh --describe --zookeeper localhost:2181 --topic errors_complaint_created_bridged,errors_compensation_created_bridged
 ./kafka-run-class.sh kafka.tools.GetOffsetShell  --broker-list localhost:9092,localhost:9092 --topic  errors_complaint_created_bridged
+./kafka-consumer-groups.sh --bootstrap-server server:9092 --describe --group my_consumer
+./kafka-consumer-groups.sh  --list --bootstrap-server server:9092
