@@ -17,10 +17,7 @@ class RangeConsumer[K, V](val kafkaProps: Properties, topics: scala.List[String]
   var records: scala.Iterator[ConsumerRecord[K, V]] = scala.Iterator.empty
 
   private def poll(): Unit = {
-//    records = consumer.poll(pollDuration).iterator().asScala.filter(filter).toList
-    val consumerRecords = consumer.poll(pollDuration)
-    consumerRecords.count()
-    records = consumerRecords.iterator().asScala.filter(filter)
+    records = consumer.poll(pollDuration).iterator().asScala.filter(filter)
     consumer.commitAsync()
   }
 
@@ -50,6 +47,4 @@ class RangeConsumer[K, V](val kafkaProps: Properties, topics: scala.List[String]
       throw new Exception("didn't get any records")
     }
   }
-
-  override def toString: String = f"${this.getClass.getName}<${this.topics}, ${this.maxOffsets}>"
 }
