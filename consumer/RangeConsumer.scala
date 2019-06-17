@@ -7,14 +7,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import scala.collection.JavaConverters._
 
 
-class RangeConsumer(val kafkaProps: Properties, topics: scala.List[String], maxOffsets: Map[Int, Long]) extends Iterator[ConsumerRecord[String, String]] {
-  private val consumer = new KafkaConsumer[String, String](kafkaProps);
+class RangeConsumer[K, V](val kafkaProps: Properties, topics: scala.List[String], maxOffsets: Map[Int, Long]) extends Iterator[ConsumerRecord[K, V]] {
+  private val consumer = new KafkaConsumer[K, V](kafkaProps)
   consumer.subscribe(topics.asJava)
   val maxRetries = 10
   private val pollDuration = 1000L
   var isFinished: Boolean = false
 
-  var records: scala.Iterator[ConsumerRecord[String, String]] = scala.Iterator.empty
+  var records: scala.Iterator[ConsumerRecord[K, V]] = scala.Iterator.empty
 
   private def poll(): Unit = {
 //    records = consumer.poll(pollDuration).iterator().asScala.filter(filter).toList
@@ -24,7 +24,7 @@ class RangeConsumer(val kafkaProps: Properties, topics: scala.List[String], maxO
     consumer.commitAsync()
   }
 
-  def filter(consumerRecord: ConsumerRecord[String, String]): Boolean = {
+  def filter(consumerRecord: ConsumerRecord[K, V]): Boolean = {
     consumerRecord.offset() <= maxOffsets(consumerRecord.partition())
   }
 
@@ -41,7 +41,7 @@ class RangeConsumer(val kafkaProps: Properties, topics: scala.List[String], maxO
     false
   }
 
-  override def next(): ConsumerRecord[String, String] = {
+  override def next(): ConsumerRecord[K, V] = {
     if (hasNext()) {
       val record = records.next()
       return record
